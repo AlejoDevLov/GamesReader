@@ -22,7 +22,7 @@ public class LogEntry
 
     public override string ToString()
     {
-        return $"[{_timestamp:MM/dd/yyyy HH/mm/ss}]" +
+        return $"[{_timestamp:MM/dd/yyyy HH:mm:ss}]" +
             $"Message: {_message}, StackTrace: {_stackTrace}";
     }
 }

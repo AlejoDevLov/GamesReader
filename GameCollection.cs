@@ -8,4 +8,8 @@ namespace GamesReader;
 
 public class GameCollection
 {
+    internal void Run()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GamesReader.Utils.Loggers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace GamesReader.Services;
 
-internal class LoggerService
+internal class LoggerService(ILogger logger) 
 {
-    internal void Log(string v)
+    private readonly ILogger _logger = logger;
+    internal void Log(LogEntry log)
     {
-        throw new NotImplementedException();
+      _logger.Log(log);
     }
+
 }
