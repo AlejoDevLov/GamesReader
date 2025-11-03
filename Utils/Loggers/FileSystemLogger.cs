@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using GamesReader.UI;
+using System.IO;
 
 
 namespace GamesReader.Utils.Loggers;
@@ -10,17 +11,19 @@ public class FileSystemLogger : ILogger
     private readonly string? _logFilePath;
 
     private static FileSystemLogger? _instance;
+    private readonly IUI? _ui;
 
-    private FileSystemLogger(string folderName, string fileName)
+    private FileSystemLogger(IUI ui, string folderName, string fileName)
     {
         _logFolderName = folderName;
         _logFileName = fileName;
         _logFilePath = Path.Combine(_logFolderName, _logFileName);
+        _ui = ui;
     }
 
-    public static void CreateInstance(string folderName = "Logs", string fileName = "error_log.txt")
+    public static void CreateInstance(IUI ui, string folderName = "Logs", string fileName = "error_log.txt")
     {
-        _instance ??= new FileSystemLogger(folderName, fileName);
+        _instance ??= new FileSystemLogger( ui, folderName, fileName);
     }
 
     public static FileSystemLogger GetInstance()
@@ -52,7 +55,7 @@ public class FileSystemLogger : ILogger
         }
         catch (IOException ex)
         {
-            Console.WriteLine($"Failed to write log in the path '{_logFilePath}'." +
+            _ui.PrintLine($"Failed to write log in the path '{_logFilePath}'." +
                 $"Message: {ex.Message}");
             throw;
         }
