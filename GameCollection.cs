@@ -1,4 +1,5 @@
-﻿using GamesReader.UI;
+﻿using GamesReader.Services;
+using GamesReader.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +8,18 @@ using System.Threading.Tasks;
 
 namespace GamesReader;
 
-public class GameCollection(IUI ui)
+public class GameCollection(IUI ui, GameCollectionRepositoryService repositoryService)
 {
-
+    private readonly GameCollectionRepositoryService _repositoryService = repositoryService;
     private readonly IUI _ui = ui;
     private readonly IEnumerable<string> _validFileNames =
     [
         "games",
         "gamesinvalidformat"
     ];
+    private readonly string _fileExtension = ".json";
 
-internal void Run()
+    internal void Run()
     {
         string filename = AskForFilenameToUser();
     }
@@ -32,7 +34,7 @@ internal void Run()
             fileName = _ui.ReadLine();
             isAValidFilename = CheckIfFileNameExists(fileName);
         } while (!isAValidFilename);
-        return fileName;
+        return fileName + _fileExtension;
     }
 
     private bool CheckIfFileNameExists(string fileName)
@@ -42,5 +44,7 @@ internal void Run()
 
     private void PrintGameCollection(string filename)
     {
-
+        string data = _repositoryService.GetGameCollectionData(filename);
+        _ui.PrintLine(data);
     }
+}

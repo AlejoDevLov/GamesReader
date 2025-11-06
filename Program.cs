@@ -3,12 +3,15 @@ using GamesReader.Services;
 using GamesReader.UI;
 using GamesReader.Utils;
 using GamesReader.Utils.Loggers;
+using GamesReader.Repositories;
 
 
 try
 {
     IUI consoleUI = ConsoleUI.GetInstance();
-    var gameCollection = new GameCollection(consoleUI);
+    GameCollectionRepository gameCollectionRepository = new();
+    GameCollectionRepositoryService repositoryService = new(gameCollectionRepository);
+    var gameCollection = new GameCollection(consoleUI, repositoryService);
     gameCollection.Run();
 }
 catch (Exception ex)

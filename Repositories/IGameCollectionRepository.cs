@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GamesReader.Repositories
 {
-    internal class GameCollection
+    public interface IGameCollectionRepository
     {
+        string GetGameCollectionData(string filename);
     }
 }
