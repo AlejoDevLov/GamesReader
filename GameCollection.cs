@@ -12,6 +12,7 @@ public class GameCollection(IUI ui, GameCollectionRepositoryService repositorySe
 {
     private readonly GameCollectionRepositoryService _repositoryService = repositoryService;
     private readonly IUI _ui = ui;
+
     private readonly IEnumerable<string> _validFileNames =
     [
         "games",
