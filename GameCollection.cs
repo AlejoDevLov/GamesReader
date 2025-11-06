@@ -22,19 +22,43 @@ public class GameCollection(IUI ui, GameCollectionRepositoryService repositorySe
     internal void Run()
     {
         string filename = AskForFilenameToUser();
+        PrintGameCollection(filename);
     }
 
     private string AskForFilenameToUser()
     {
-        bool isAValidFilename;
+        bool isAValidFilename = false;
         string fileName;
         do
         {
             _ui.PrintLine("Enter the name of the file you want to read");
-            fileName = _ui.ReadLine();
-            isAValidFilename = CheckIfFileNameExists(fileName);
+            fileName = _ui.ReadLine();            
+            isAValidFilename = ValidateUserInput(fileName);
         } while (!isAValidFilename);
         return fileName + _fileExtension;
+    }
+
+    private bool ValidateUserInput(string input)
+    {
+        if (input is null)
+        {
+            _ui.PrintLine("File name cannot be null.");
+            return false;
+        }
+        else if (input.Trim() == string.Empty)
+        {
+            _ui.PrintLine("File name cannot be empty.");
+            return false;
+        }
+        else if (!CheckIfFileNameExists(input))
+        {
+            _ui.PrintLine("File not found.");
+            return false;
+        }
+        else
+        {
+            return CheckIfFileNameExists(input);
+        }
     }
 
     private bool CheckIfFileNameExists(string fileName)
