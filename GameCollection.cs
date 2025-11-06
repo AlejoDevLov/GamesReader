@@ -11,24 +11,36 @@ public class GameCollection(IUI ui)
 {
 
     private readonly IUI _ui = ui;
+    private readonly IEnumerable<string> _validFileNames =
+    [
+        "games",
+        "gamesinvalidformat"
+    ];
 
-    internal void Run()
+internal void Run()
     {
-        throw new NotImplementedException();
+        string filename = AskForFilenameToUser();
     }
 
-    private void AskGamelistnameToUser()
+    private string AskForFilenameToUser()
     {
+        bool isAValidFilename;
+        string fileName;
         do
         {
             _ui.PrintLine("Enter the name of the file you want to read");
-            string fileName = _ui.ReadLine();
-
-        } while ();
+            fileName = _ui.ReadLine();
+            isAValidFilename = CheckIfFileNameExists(fileName);
+        } while (!isAValidFilename);
+        return fileName;
     }
 
     private bool CheckIfFileNameExists(string fileName)
     {
+        return _validFileNames.Contains(fileName.ToLower());
+    }
+
+    private void PrintGameCollection(string filename)
+    {
 
     }
-}

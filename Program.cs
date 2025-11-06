@@ -7,14 +7,15 @@ using GamesReader.Utils.Loggers;
 
 try
 {
-    var gameCollection = new GameCollection();
+    IUI consoleUI = ConsoleUI.GetInstance();
+    var gameCollection = new GameCollection(consoleUI);
     gameCollection.Run();
 }
 catch (Exception ex)
 {
     try
     {
-        IUI consoleUI = new ConsoleUI();
+        IUI consoleUI = ConsoleUI.GetInstance();
         UIService uIService = new(consoleUI);
         string errorMessage = $"""
             Something unexpected has happened.
