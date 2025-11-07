@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GamesReader.Services;
 
-internal class LoggerService(ILogger logger) 
+public class LoggerService(ILogger logger) 
 {
     private readonly ILogger _logger = logger;
     internal void Log(LogEntry log)

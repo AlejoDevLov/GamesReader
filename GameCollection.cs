@@ -1,5 +1,7 @@
-﻿using GamesReader.Services;
+﻿using GamesReader.Models;
+using GamesReader.Services;
 using GamesReader.UI;
+using GamesReader.Utils.DataFormatter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace GamesReader;
 
-public class GameCollection(IUI ui, GameCollectionRepositoryService repositoryService)
+public class GameCollection(IUI ui, JsonDataFormatter jsonDataFormatter)
 {
-    private readonly GameCollectionRepositoryService _repositoryService = repositoryService;
+    private readonly JsonDataFormatter _jsonDataFormatter = jsonDataFormatter;
     private readonly IUI _ui = ui;
 
     private readonly IEnumerable<string> _validFileNames =
@@ -69,7 +71,20 @@ public class GameCollection(IUI ui, GameCollectionRepositoryService repositorySe
 
     private void PrintGameCollection(string filename)
     {
-        string data = _repositoryService.GetGameCollectionData(filename);
-        _ui.PrintLine(data);
+        List<Game> games = _jsonDataFormatter.ParseFromJsonToGames(filename);
+        if( games.Count == 0)
+        {
+            _ui.PrintLine("No games found in the collection.");
+        }
+        else
+        {
+            StringBuilder sb = new();
+            sb.AppendLine("Loaded games are:");
+            foreach (var game in games)
+            {
+                sb.AppendLine($"- {game.Title} ({game.ReleaseYear}), Rating: {game.Rating}");
+            }
+            _ui.PrintLine(sb.ToString());
+        }
     }
 }

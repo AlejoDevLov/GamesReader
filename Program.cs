@@ -1,17 +1,26 @@
 ﻿using GamesReader;
+using GamesReader.Repositories;
 using GamesReader.Services;
 using GamesReader.UI;
-using GamesReader.Utils;
+using GamesReader.Utils.DataFormatter;
 using GamesReader.Utils.Loggers;
-using GamesReader.Repositories;
 
+
+LoggerService GetLogger(IUI ui)
+{
+    FileSystemLogger.CreateInstance(ui);
+    ILogger logger = FileSystemLogger.GetInstance();
+    return new LoggerService(logger);   
+}
 
 try
 {
     IUI consoleUI = ConsoleUI.GetInstance();
     GameCollectionRepository gameCollectionRepository = new();
     GameCollectionRepositoryService repositoryService = new(gameCollectionRepository);
-    var gameCollection = new GameCollection(consoleUI, repositoryService);
+    LoggerService loggerService = GetLogger(consoleUI);
+    JsonDataFormatter jsonDataFormatter = new(repositoryService, consoleUI, loggerService);
+    var gameCollection = new GameCollection(consoleUI, jsonDataFormatter);
     gameCollection.Run();
 }
 catch (Exception ex)
@@ -23,17 +32,11 @@ catch (Exception ex)
         string errorMessage = $"""
             Something unexpected has happened.
             Apologies for the inconvenience.
-            Try relaunching the app.
-
-            Message: {ex.Message}
-            StackTrace: {ex.StackTrace}
             """;
 
         uIService.PrintLine(errorMessage);
 
-        FileSystemLogger.CreateInstance(consoleUI);
-        ILogger logger = FileSystemLogger.GetInstance();
-        LoggerService loggerService = new(logger);
+        LoggerService loggerService = GetLogger(consoleUI);
         LogEntry log = new(ex.Message, ex.StackTrace ?? "No stackTrace");
 
         loggerService.Log(log);
