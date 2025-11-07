@@ -1,10 +1,9 @@
 ﻿using GamesReader.Models;
-using GamesReader.Services;
 using GamesReader.UI;
 using GamesReader.Utils.DataFormatter;
 using System.Text;
 
-namespace GamesReader;
+namespace GamesReader.Core;
 
 public class GameCollection(IUI ui, JsonDataFormatter jsonDataFormatter)
 {

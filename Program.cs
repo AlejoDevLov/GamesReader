@@ -1,4 +1,4 @@
-﻿using GamesReader;
+﻿using GamesReader.Core;
 using GamesReader.Exceptions;
 using GamesReader.Repositories;
 using GamesReader.Services;
