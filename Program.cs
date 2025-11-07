@@ -1,4 +1,5 @@
 ﻿using GamesReader;
+using GamesReader.Exceptions;
 using GamesReader.Repositories;
 using GamesReader.Services;
 using GamesReader.UI;
@@ -6,7 +7,7 @@ using GamesReader.Utils.DataFormatter;
 using GamesReader.Utils.Loggers;
 
 
-LoggerService GetLogger(IUI ui)
+static LoggerService GetLogger(IUI ui)
 {
     FileSystemLogger.CreateInstance(ui);
     ILogger logger = FileSystemLogger.GetInstance();
@@ -23,19 +24,24 @@ try
     var gameCollection = new GameCollection(consoleUI, jsonDataFormatter);
     gameCollection.Run();
 }
+catch (InvalidJsonFormatException)
+{
+    Console.WriteLine("Sorry! The application has experienced an unexpected error and will have to be closed.");
+    Console.ReadKey();
+    return;
+}
 catch (Exception ex)
 {
     try
     {
-        IUI consoleUI = ConsoleUI.GetInstance();
-        UIService uIService = new(consoleUI);
         string errorMessage = $"""
             Something unexpected has happened.
             Apologies for the inconvenience.
             """;
 
-        uIService.PrintLine(errorMessage);
+        Console.WriteLine(errorMessage);
 
+        IUI consoleUI = ConsoleUI.GetInstance();
         LoggerService loggerService = GetLogger(consoleUI);
         LogEntry log = new(ex.Message, ex.StackTrace ?? "No stackTrace");
 
@@ -43,8 +49,7 @@ catch (Exception ex)
     }
     catch(Exception logEx)
     {
-        Console.WriteLine($"Something failed wether in the logger or UIService: {logEx}." + Environment.NewLine +
-            "Press any key to close the program.");
+        Console.WriteLine($"Something failed wether in the logger or UIService: {logEx}.");
     }
 }
 

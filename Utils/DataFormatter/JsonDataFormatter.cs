@@ -1,12 +1,9 @@
 ﻿using GamesReader.Models;
 using GamesReader.Services;
 using System.Text.Json;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using GamesReader.UI;
-using GamesReader.Utils.Loggers;
+using GamesReader.Exceptions;
 
 namespace GamesReader.Utils.DataFormatter;
 
@@ -29,9 +26,9 @@ public class JsonDataFormatter(GameCollectionRepositoryService repositoryService
         {
             _ui.PrintLine($"JSON in the {filename}  was not in a valid format. JSON body:" +
                 $"{dataAsJson}");
-            _ui.PrintLine("Sorry! The application has experienced an unexpected error and will have to be closed.");
             _logger.Log(new(ex.Message, ex.StackTrace ?? ""));
-            throw;
+
+            throw new InvalidJsonFormatException(ex.Message, ex);
         }
     }
 }
