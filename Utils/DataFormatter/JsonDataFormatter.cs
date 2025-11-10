@@ -24,8 +24,14 @@ public class JsonDataFormatter(GameCollectionRepositoryService repositoryService
         }
         catch(JsonException ex)
         {
+            var originalColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+
             _ui.PrintLine($"JSON in the {filename}  was not in a valid format. JSON body:" +
                 $"{dataAsJson}");
+
+            Console.ForegroundColor = originalColor;
+
             _logger.Log(new(ex.Message, ex.StackTrace ?? ""));
 
             throw new InvalidJsonFormatException(ex.Message, ex);
