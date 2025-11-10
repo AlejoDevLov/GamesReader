@@ -17,7 +17,7 @@ public class UserInteractor
         _userDataValidator = userDataValidator;
     }
 
-    public string AskForFilename(string fileExtension)
+    public string AskForFilename()
     {
         bool isAValidFilename = false;
         string fileName;
@@ -27,7 +27,7 @@ public class UserInteractor
             fileName = _ui.ReadLine();
             isAValidFilename = _userDataValidator.ValidateInput(fileName);
         } while (!isAValidFilename);
-        return fileName + fileExtension;
+        return fileName;
     }
 
     public void PrintGameCollection(string filename)

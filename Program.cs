@@ -1,12 +1,12 @@
 ﻿using GamesReader.Core;
 using GamesReader.Exceptions;
+using GamesReader.Logging;
 using GamesReader.Repositories;
 using GamesReader.Services;
 using GamesReader.UI;
 using GamesReader.UI.UIActions;
 using GamesReader.UI.UserInterface;
 using GamesReader.Utils.DataFormatter;
-using GamesReader.Utils.Loggers;
 
 
 static LoggerService GetLogger(IUI ui)

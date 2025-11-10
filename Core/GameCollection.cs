@@ -1,18 +1,15 @@
-﻿using GamesReader.Models;
-using GamesReader.UI.UIActions;
-using GamesReader.Utils.DataFormatter;
-using System.Text;
+﻿using GamesReader.UI.UIActions;
+
 
 namespace GamesReader.Core;
 
 public class GameCollection(UserInteractor userInteractor)
 {
     private readonly UserInteractor _userInteractor = userInteractor;
-    private readonly string _fileExtension = ".json";
 
     internal void Run()
     {
-        string filename = _userInteractor.AskForFilename(_fileExtension);
+        string filename = _userInteractor.AskForFilename();
         _userInteractor.PrintGameCollection(filename);
     }
 }

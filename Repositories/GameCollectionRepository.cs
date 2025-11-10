@@ -11,8 +11,8 @@ namespace GamesReader.Repositories
         private readonly string _basePath = "Data";
         private readonly IEnumerable<string> _validFileNames =
     [
-        "games",
-        "gamesinvalidformat"
+        "games.json",
+        "gamesinvalidformat.json"
     ];
 
         public IEnumerable<string> GetAvailableFileNames()

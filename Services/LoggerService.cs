@@ -1,4 +1,4 @@
-﻿using GamesReader.Utils.Loggers;
+﻿using GamesReader.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

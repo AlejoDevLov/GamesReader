@@ -2,7 +2,7 @@
 using System.IO;
 
 
-namespace GamesReader.Utils.Loggers;
+namespace GamesReader.Logging;
 
 public class FileSystemLogger : ILogger
 {

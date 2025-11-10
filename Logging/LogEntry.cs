@@ -1,5 +1,4 @@
-﻿
-namespace GamesReader.Utils.Loggers;
+﻿namespace GamesReader.Logging;
 
 
 public class LogEntry
