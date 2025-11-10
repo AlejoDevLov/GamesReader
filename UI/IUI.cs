@@ -5,4 +5,6 @@ public interface IUI
 {
     void PrintLine(string message);
     string ReadLine();
+
+    void PrintError(string message);
 }
