@@ -16,5 +16,9 @@ namespace GamesReader.Services
             return _repository.GetGameCollectionData(filename);
         }
 
+        internal IEnumerable<string> GetAvailableFileNames()
+        {
+            return _repository.GetAvailableFileNames();
+        }
     }
 }

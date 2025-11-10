@@ -9,6 +9,17 @@ namespace GamesReader.Repositories
     public class GameCollectionRepository : IGameCollectionRepository
     {
         private readonly string _basePath = "Data";
+        private readonly IEnumerable<string> _validFileNames =
+    [
+        "games",
+        "gamesinvalidformat"
+    ];
+
+        public IEnumerable<string> GetAvailableFileNames()
+        {
+            return _validFileNames;
+        }
+
         public string GetGameCollectionData(string filename)
         {
             filename = filename.ToLower();

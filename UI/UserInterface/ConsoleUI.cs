@@ -1,5 +1,4 @@
-﻿
-namespace GamesReader.UI;
+﻿namespace GamesReader.UI.UserInterface;
 
 internal class ConsoleUI : IUI
 {

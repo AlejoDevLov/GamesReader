@@ -8,6 +8,7 @@ namespace GamesReader.Repositories
 {
     public interface IGameCollectionRepository
     {
+        IEnumerable<string> GetAvailableFileNames();
         string GetGameCollectionData(string filename);
     }
 }

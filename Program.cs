@@ -3,6 +3,8 @@ using GamesReader.Exceptions;
 using GamesReader.Repositories;
 using GamesReader.Services;
 using GamesReader.UI;
+using GamesReader.UI.UIActions;
+using GamesReader.UI.UserInterface;
 using GamesReader.Utils.DataFormatter;
 using GamesReader.Utils.Loggers;
 
@@ -17,11 +19,15 @@ static LoggerService GetLogger(IUI ui)
 try
 {
     IUI consoleUI = ConsoleUI.GetInstance();
-    GameCollectionRepository gameCollectionRepository = new();
-    GameCollectionRepositoryService repositoryService = new(gameCollectionRepository);
     LoggerService loggerService = GetLogger(consoleUI);
-    JsonDataFormatter jsonDataFormatter = new(repositoryService, consoleUI, loggerService);
-    var gameCollection = new GameCollection(consoleUI, jsonDataFormatter);
+
+    var  gameCollectionRepository = new GameCollectionRepository();
+    var repositoryService = new GameCollectionRepositoryService(gameCollectionRepository);
+    var jsonDataFormatter = new JsonDataFormatter(repositoryService, consoleUI, loggerService);
+    var userDataValidator = new UserDataValidator(repositoryService.GetAvailableFileNames(), consoleUI);
+    var userInteractor = new UserInteractor(consoleUI, jsonDataFormatter, userDataValidator);
+    var gameCollection = new GameCollection(userInteractor);
+
     gameCollection.Run();
 }
 catch (InvalidJsonFormatException)
